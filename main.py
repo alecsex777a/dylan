@@ -11,20 +11,28 @@ import random
 
 
 from defs import getUrl, getcards, phone
-API_ID =  1667849
-API_HASH = 'b719710209932bff18219f4064e92388'
-SEND_CHAT = '@cyph33'
+API_ID =  27415751
+API_HASH = '39ef24c5b03e0584f461675988c25ce3'
+SEND_CHAT = '@DarwinScrapper'
 
 client = TelegramClient('session', API_ID, API_HASH)
 ccs = []
 
 chats  = [
     # '@fullcuentasgratis','
-    '@uchihaworld',
+    '@Unlimited_CC',
+    '@ChatCuartelCarding',
+    '@CCsfreehere',
+    '@ScrapeLive',
+    '@TeamCreditCcard',
+    '@LalaScrap',
+    '@VegetaScrap',
+    '@ScrapperRbt',
+    '@scrappcodex',
+    '@LalaScrap',
+    '@BlindDump',
     '@ScrapperLost',
-    '@JLScrapper',
-    '@MacacosCC',
-    '@LiveCCFam'   
+    '@NfPrBroScraper'   
 ]
 
 with open('cards.txt', 'r') as r:
@@ -55,30 +63,32 @@ async def my_event_handler(m):
     if cc in ccs:
         return
     ccs.append(cc)
-    bin = requests.get(f'https://adyen-enc-and-bin-info.herokuapp.com/bin/{cc[:6]}')
+    bin = requests.get(f'https://bins-su-ani.vercel.app/api/{cc[:6]}')
     if not bin:
         return
     bin_json =  bin.json()
     addr = real_random_address()
     fullinfo = f"{cc}|{mes}|{ano}|{cvv}|{names.get_full_name()}|{addr['address1']}|{addr['city']}|{addr['state']}|{addr['postalCode']}|{phone()}|dob: {datetime.strftime(datetime(random.randint(1960, 2005), random.randint(1, 12),random.randint(1, 28), ), '%Y-%m-%d')}|United States Of America"
     text = f"""
-╔═══════════════════════╗
-╟ ● **Scrapper** 
-╟═══════════════════════╝
-╟ ● __CC__:
-╟ ╙ `{cc}|{mes}|{ano}|{cvv}`
-╟ ● __INFO__:
-╟ ╙ {bin_json['vendor']} - {bin_json['type']} - {bin_json['level']}
-╟ ╙ {bin_json['bank']}
-╟ ╙ {bin_json['country_iso']} - {bin_json['flag']}
-╟ ● __FULL INFO__:
-╟ ╙ {fullinfo}
-╚═══════════════════════╝
+╔═════════════════════════════╗
+╟ ● 𝔻𝔸ℝ𝕎𝕀ℕ 𝕊ℂℝ𝔸ℙℙ𝔼ℝ 𝕍𝕀ℙ ●
+╟═════════════════════════════╝
+╟ ● **CC**: `{cc}|{mes}|{ano}|{cvv}`
+╟ ● **INFO**: {bin_json['data']['vendor']} - {bin_json['data']['type']} - {bin_json['data']['level']}
+╟ ● **EXTRA**: `{extra}xxxx|{mes}|{ano}|rnd`
+╟ ● **EXTRA**: `{extra2}xxxx|{mes}|{ano}|rnd`
+╟ ● **EXTRA**: `{extra2}xxxx|{mes}|{ano}|rnd`
+╟══════════════════════════════
+╟ ● **BANK**: {bin_json['data']['bank']}
+╟ ● **COUNTRY**: {bin_json['data']['country']} - {bin_json['data']['countryInfo']['emoji']}
+╟══════════════════════════════
+╟ ● **SCRAPPER BY**: @DarwinOficial
+╚═════════════════════════════╝
 """    
     print(f'{cc}|{mes}|{ano}|{cvv}')
     with open('cards.txt', 'a') as w:
         w.write(fullinfo + '\n')
-    await client.send_message(SEND_CHAT, text, link_preview = False)
+    await client.send_message(SEND_CHAT, text, file = 'logo.gif')
 
 
 
